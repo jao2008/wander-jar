@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Verificar email — Wander Jar')
+@section('page-id', 'auth.verify-email')
 
 @push('styles')
   @vite('resources/css/verify-email.css')
@@ -61,7 +62,7 @@
       @endif
 
       <div class="verify-actions">
-        <form method="POST" action="{{ route('verification.send') }}">
+        <form method="POST" action="{{ route('verification.send') }}" class="verify-form">
           @csrf
 
           <button type="submit" class="btn-submit">
@@ -70,7 +71,7 @@
           </button>
         </form>
 
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" class="logout-form">
           @csrf
 
           <button type="submit" class="btn-logout">
