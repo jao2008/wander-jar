@@ -1,0 +1,634 @@
+/* =========================================================
+   EVENTS EDIT — Wander Jar
+   Premium / orange-coral / light + dark ready
+   ========================================================= */
+
+body[data-page="events.edit"]{
+  color: var(--text);
+
+  --events-accent: #ff7a18;
+  --events-accent-hover: #f06412;
+  --events-accent-ink: #ffffff;
+  --events-accent-soft: rgba(255, 122, 24, .12);
+  --events-accent-soft-2: rgba(255, 122, 24, .18);
+  --events-accent-border: rgba(255, 122, 24, .32);
+  --events-focus: rgba(255, 122, 24, .18);
+}
+
+html.dark-mode body[data-page="events.edit"]{
+  --events-accent-soft: rgba(255, 122, 24, .14);
+  --events-accent-soft-2: rgba(255, 122, 24, .20);
+  --events-accent-border: rgba(255, 122, 24, .36);
+  --events-focus: rgba(255, 122, 24, .20);
+}
+
+/* PAGE */
+body[data-page="events.edit"] .events-edit-page{
+  min-height: calc(100vh - var(--header-h, 92px));
+  padding: 34px 0 58px;
+}
+
+body[data-page="events.edit"] .wj-narrow{
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 2.6vw, 28px);
+}
+
+/* HERO */
+body[data-page="events.edit"] .events-edit-hero{
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 18px;
+  padding: 24px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--panel2);
+  color: var(--text);
+  box-shadow: var(--shadow-1);
+
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+}
+
+body[data-page="events.edit"] .events-edit-hero::before{
+  content: "";
+  position: absolute;
+  top: -90px;
+  right: -80px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 122, 24, .16),
+    rgba(255, 122, 24, .06),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+html.dark-mode body[data-page="events.edit"] .events-edit-hero::before{
+  background: radial-gradient(
+    circle,
+    rgba(255, 122, 24, .13),
+    rgba(255, 122, 24, .045),
+    transparent 70%
+  );
+}
+
+body[data-page="events.edit"] .events-edit-hero > *{
+  position: relative;
+  z-index: 1;
+}
+
+body[data-page="events.edit"] .events-edit-hero__left{
+  min-width: 0;
+}
+
+body[data-page="events.edit"] .events-edit-hero__right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+body[data-page="events.edit"] .events-edit-kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+
+  margin-bottom: 12px;
+  padding: 8px 12px;
+
+  border-radius: 999px;
+  border: 1px solid var(--events-accent-border);
+  background: var(--events-accent-soft);
+  color: var(--events-accent);
+  font-size: .86rem;
+  font-weight: 850;
+}
+
+body[data-page="events.edit"] .events-edit-kicker i{
+  color: var(--events-accent);
+}
+
+body[data-page="events.edit"] .wj-title{
+  margin: 0;
+  color: var(--heading, var(--text));
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: -.045em;
+}
+
+body[data-page="events.edit"] .wj-subtitle{
+  max-width: 760px;
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: .98rem;
+  font-weight: 680;
+  line-height: 1.6;
+}
+
+/* ERROR BOX */
+body[data-page="events.edit"] .wj-errorbox{
+  display: block;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 69, 58, .35);
+  background: var(--danger-soft);
+  color: var(--text);
+}
+
+body[data-page="events.edit"] .wj-errorbox strong{
+  display: block;
+  color: var(--heading, var(--text));
+  font-weight: 950;
+}
+
+body[data-page="events.edit"] .wj-errorbox ul{
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+body[data-page="events.edit"] .wj-errorbox li{
+  margin: 4px 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* GRID */
+body[data-page="events.edit"] .events-edit-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 18px;
+  align-items: start;
+}
+
+/* CARDS */
+body[data-page="events.edit"] .events-edit-card{
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--panel2);
+  color: var(--text);
+  box-shadow: var(--shadow-1);
+
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+}
+
+body[data-page="events.edit"] .events-edit-card:not(.events-edit-card--side){
+  padding: 24px;
+}
+
+body[data-page="events.edit"] .events-edit-card--side{
+  position: sticky;
+  top: calc(var(--header-h, 92px) + 18px);
+  padding: 22px;
+}
+
+body[data-page="events.edit"] .events-edit-card__head{
+  margin-bottom: 20px;
+}
+
+body[data-page="events.edit"] .events-edit-card__title{
+  margin: 0;
+  color: var(--heading, var(--text));
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+}
+
+body[data-page="events.edit"] .events-edit-card__subtitle{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+/* FORM */
+body[data-page="events.edit"] .events-edit-form{
+  display: grid;
+  gap: 16px;
+}
+
+body[data-page="events.edit"] .events-edit-row{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+body[data-page="events.edit"] .events-edit-field{
+  display: grid;
+  gap: 8px;
+}
+
+body[data-page="events.edit"] .events-edit-field label{
+  color: var(--heading, var(--text));
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+body[data-page="events.edit"] .events-edit-label-muted{
+  color: var(--muted);
+  font-size: .9em;
+  font-weight: 700;
+}
+
+body[data-page="events.edit"] .events-edit-input{
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--text);
+  outline: 0;
+
+  font: inherit;
+  font-weight: 650;
+
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background-color .18s ease,
+    color .18s ease;
+}
+
+body[data-page="events.edit"] .events-edit-input::placeholder{
+  color: var(--muted2, var(--muted));
+  opacity: 1;
+}
+
+body[data-page="events.edit"] .events-edit-input:hover{
+  border-color: var(--border-strong);
+}
+
+body[data-page="events.edit"] .events-edit-input:focus{
+  border-color: var(--events-accent);
+  box-shadow: 0 0 0 4px var(--events-focus);
+  background: var(--panel2);
+}
+
+body[data-page="events.edit"] .events-edit-input.is-invalid{
+  border-color: var(--danger);
+}
+
+body[data-page="events.edit"] .events-edit-textarea{
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+body[data-page="events.edit"] .events-edit-error{
+  display: block;
+  margin-top: 2px;
+  color: var(--danger);
+  font-size: .86rem;
+  font-weight: 750;
+}
+
+body[data-page="events.edit"] .events-edit-help{
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+/* DATE + TIME */
+body[data-page="events.edit"] input[type="date"].events-edit-input,
+body[data-page="events.edit"] input[type="time"].events-edit-input{
+  color-scheme: light;
+}
+
+html.dark-mode body[data-page="events.edit"] input[type="date"].events-edit-input,
+html.dark-mode body[data-page="events.edit"] input[type="time"].events-edit-input{
+  color-scheme: dark;
+}
+
+html.dark-mode body[data-page="events.edit"] input[type="date"]::-webkit-calendar-picker-indicator,
+html.dark-mode body[data-page="events.edit"] input[type="time"]::-webkit-calendar-picker-indicator{
+  filter: invert(1) brightness(1.15);
+}
+
+/* MAP */
+body[data-page="events.edit"] .events-edit-mapbar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+body[data-page="events.edit"] .events-edit-mapsearch{
+  flex: 1 1 260px;
+}
+
+body[data-page="events.edit"] .events-edit-map{
+  width: 100%;
+  min-height: 360px;
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* LEAFLET */
+body[data-page="events.edit"] .events-edit-map .leaflet-control-zoom{
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body[data-page="events.edit"] .events-edit-map .leaflet-control-zoom a{
+  width: 38px !important;
+  height: 38px !important;
+  display: grid !important;
+  place-items: center !important;
+
+  border: 1px solid var(--border) !important;
+  background: var(--panel2) !important;
+  color: var(--text) !important;
+
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  box-shadow: var(--shadow-1);
+}
+
+body[data-page="events.edit"] .events-edit-map .leaflet-control-zoom a:hover{
+  background: var(--events-accent-soft) !important;
+  border-color: var(--events-accent-border) !important;
+  color: var(--events-accent) !important;
+}
+
+body[data-page="events.edit"] .events-edit-map .leaflet-popup-content-wrapper,
+body[data-page="events.edit"] .events-edit-map .leaflet-popup-tip{
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+}
+
+body[data-page="events.edit"] .events-edit-map .leaflet-control-attribution{
+  border-radius: 10px 0 0 0 !important;
+  background: var(--panel2) !important;
+  color: var(--muted) !important;
+  border-top: 1px solid var(--border) !important;
+  border-left: 1px solid var(--border) !important;
+}
+
+body[data-page="events.edit"] .events-edit-map .leaflet-control-attribution a{
+  color: var(--events-accent) !important;
+}
+
+/* ACTIONS */
+body[data-page="events.edit"] .events-edit-actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* BUTTONS */
+body[data-page="events.edit"] .wj-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: 999px;
+
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  user-select: none;
+
+  transition:
+    transform .16s ease,
+    background-color .16s ease,
+    border-color .16s ease,
+    color .16s ease,
+    box-shadow .16s ease,
+    opacity .16s ease;
+}
+
+body[data-page="events.edit"] .wj-btn:hover{
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+body[data-page="events.edit"] .wj-btn:active{
+  transform: translateY(0) scale(.985);
+}
+
+body[data-page="events.edit"] .wj-btn-primary{
+  background: var(--events-accent);
+  color: var(--events-accent-ink);
+  border-color: transparent;
+  box-shadow: 0 14px 30px rgba(255, 122, 24, .22);
+}
+
+body[data-page="events.edit"] .wj-btn-primary:hover{
+  background: var(--events-accent-hover);
+  color: var(--events-accent-ink);
+  box-shadow: 0 18px 38px rgba(255, 122, 24, .26);
+}
+
+html.dark-mode body[data-page="events.edit"] .wj-btn-primary{
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .34);
+}
+
+body[data-page="events.edit"] .wj-btn-ghost{
+  background: var(--panel);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body[data-page="events.edit"] .wj-btn-ghost:hover{
+  background: var(--events-accent-soft);
+  border-color: var(--events-accent-border);
+  color: var(--events-accent);
+  box-shadow: var(--shadow-1);
+}
+
+/* SIDE SUMMARY */
+body[data-page="events.edit"] .events-edit-side-icon{
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+
+  border-radius: 18px;
+  border: 1px solid var(--events-accent-border);
+  background: var(--events-accent-soft);
+  color: var(--events-accent);
+  font-size: 1.3rem;
+}
+
+body[data-page="events.edit"] .events-edit-summary{
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+body[data-page="events.edit"] .events-edit-summary__item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+body[data-page="events.edit"] .events-edit-summary__item span{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+body[data-page="events.edit"] .events-edit-summary__item span i{
+  color: var(--events-accent);
+}
+
+body[data-page="events.edit"] .events-edit-summary__item strong{
+  max-width: 52%;
+  color: var(--text);
+  font-weight: 900;
+  text-align: right;
+  word-break: break-word;
+}
+
+body[data-page="events.edit"] .events-edit-side-note{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+body[data-page="events.edit"] .events-edit-side-note i{
+  color: var(--events-accent);
+  margin-top: 2px;
+}
+
+/* THEME SAFETY */
+html.theme-switching body[data-page="events.edit"] .events-edit-hero,
+html.theme-switching body[data-page="events.edit"] .events-edit-card,
+html.theme-switching body[data-page="events.edit"] .events-edit-input,
+html.theme-switching body[data-page="events.edit"] .wj-btn,
+html.theme-switching body[data-page="events.edit"] .events-edit-map{
+  transition: none !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1050px){
+  body[data-page="events.edit"] .events-edit-grid{
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="events.edit"] .events-edit-card--side{
+    position: static;
+  }
+
+  body[data-page="events.edit"] .events-edit-summary__item strong{
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 760px){
+  body[data-page="events.edit"] .events-edit-page{
+    padding: 22px 0 44px;
+  }
+
+  body[data-page="events.edit"] .wj-narrow{
+    padding: 0 16px;
+  }
+
+  body[data-page="events.edit"] .events-edit-hero{
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  body[data-page="events.edit"] .events-edit-hero__right,
+  body[data-page="events.edit"] .events-edit-hero__right .wj-btn{
+    width: 100%;
+  }
+
+  body[data-page="events.edit"] .events-edit-hero__right .wj-btn{
+    justify-content: center;
+  }
+
+  body[data-page="events.edit"] .events-edit-row{
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="events.edit"] .events-edit-card:not(.events-edit-card--side),
+  body[data-page="events.edit"] .events-edit-card--side{
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  body[data-page="events.edit"] .events-edit-map{
+    min-height: 320px;
+    border-radius: 18px;
+  }
+
+  body[data-page="events.edit"] .events-edit-mapbar .wj-btn,
+  body[data-page="events.edit"] .events-edit-actions .wj-btn{
+    width: 100%;
+    justify-content: center;
+  }
+
+  body[data-page="events.edit"] .events-edit-actions{
+    justify-content: stretch;
+  }
+}
+
+@media (max-width: 520px){
+  body[data-page="events.edit"] .events-edit-summary__item{
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body[data-page="events.edit"] .events-edit-summary__item strong{
+    max-width: 100%;
+    text-align: left;
+  }
+}
