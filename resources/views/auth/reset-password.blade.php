@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Nova palavra-passe — Wander Jar')
+@section('page-id', 'auth.reset-password')
 
 @push('styles')
   @vite('resources/css/reset-password.css')
@@ -32,7 +33,7 @@
         </p>
       </div>
 
-      <form method="POST" action="{{ route('password.store') }}" class="auth-form">
+      <form method="POST" action="{{ route('password.store') }}" class="auth-form" novalidate>
         @csrf
 
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
@@ -84,6 +85,7 @@
               type="button"
               class="password-toggle"
               aria-label="Mostrar palavra-passe"
+              aria-controls="password"
             >
               <i class="bi bi-eye-slash" aria-hidden="true"></i>
             </button>
@@ -108,7 +110,7 @@
               id="password_confirmation"
               type="password"
               name="password_confirmation"
-              class="form-input"
+              class="form-input @error('password_confirmation') is-invalid @enderror"
               required
               autocomplete="new-password"
               placeholder="Repete a palavra-passe"
@@ -118,10 +120,18 @@
               type="button"
               class="password-toggle"
               aria-label="Mostrar palavra-passe"
+              aria-controls="password_confirmation"
             >
               <i class="bi bi-eye-slash" aria-hidden="true"></i>
             </button>
           </div>
+
+          @error('password_confirmation')
+            <span class="form-error">
+              <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+              <span>{{ $message }}</span>
+            </span>
+          @enderror
         </div>
 
         <button type="submit" class="btn-submit">
