@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title', 'Confirmar palavra-passe — Wander Jar')
+@section('page-id', 'auth.confirm-password')
+
 @push('styles')
   @vite('resources/css/confirm-password.css')
 @endpush
@@ -13,68 +16,76 @@
 
 <main class="auth-page">
   <div class="container-auth-single">
-    
-    <div class="auth-card">
-      
-      <!-- Header -->
+
+    <section class="auth-card" aria-labelledby="confirm-password-title">
+
       <div class="auth-header">
-        <div class="auth-icon">
+        <div class="auth-icon" aria-hidden="true">
           <i class="bi bi-shield-check"></i>
         </div>
-        <h1 class="auth-title">Confirma a tua password</h1>
-        <p class="auth-subtitle">Esta é uma área segura. Por favor, confirma a tua password antes de continuar.</p>
+
+        <h1 id="confirm-password-title" class="auth-title">
+          Confirma a tua palavra-passe
+        </h1>
+
+        <p class="auth-subtitle">
+          Esta é uma área segura. Confirma a tua palavra-passe antes de continuares.
+        </p>
       </div>
 
-      <!-- Form -->
-      <form method="POST" action="{{ route('password.confirm') }}" class="auth-form">
+      <form method="POST" action="{{ route('password.confirm') }}" class="auth-form" novalidate>
         @csrf
 
-        <!-- Password -->
         <div class="form-group">
           <label for="password" class="form-label">
-            <i class="bi bi-lock"></i>
-            Password
+            <i class="bi bi-lock" aria-hidden="true"></i>
+            <span>Palavra-passe</span>
           </label>
+
           <div class="password-wrapper">
-            <input 
-              id="password" 
-              type="password" 
-              name="password" 
-              class="form-input @error('password') is-invalid @enderror" 
-              required 
+            <input
+              id="password"
+              type="password"
+              name="password"
+              class="form-input @error('password') is-invalid @enderror"
+              required
               autocomplete="current-password"
               placeholder="••••••••"
               autofocus
             >
-            <button type="button" class="password-toggle" aria-label="Mostrar password">
-              <i class="bi bi-eye-slash"></i>
+
+            <button
+              type="button"
+              class="password-toggle"
+              aria-label="Mostrar palavra-passe"
+              aria-controls="password"
+            >
+              <i class="bi bi-eye-slash" aria-hidden="true"></i>
             </button>
           </div>
+
           @error('password')
             <span class="form-error">
-              <i class="bi bi-exclamation-circle"></i>
-              {{ $message }}
+              <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+              <span>{{ $message }}</span>
             </span>
           @enderror
         </div>
 
-        <!-- Submit Button -->
         <button type="submit" class="btn-submit">
           <span>Confirmar</span>
-          <i class="bi bi-check-circle"></i>
+          <i class="bi bi-check-circle" aria-hidden="true"></i>
         </button>
 
-        <!-- Back -->
         <div class="auth-footer">
           <a href="{{ url()->previous() }}" class="link-back">
-            <i class="bi bi-arrow-left"></i>
-            Voltar
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            <span>Voltar</span>
           </a>
         </div>
-
       </form>
 
-    </div>
+    </section>
 
   </div>
 </main>

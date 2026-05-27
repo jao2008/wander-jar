@@ -1,111 +1,172 @@
-// ====================================
-// CONFIRM PASSWORD JS
-// ====================================
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  // ====================================
-  // PASSWORD TOGGLE (Mostrar/Esconder)
-  // ====================================
-  const passwordToggle = document.querySelector('.password-toggle');
-  
-  if (passwordToggle) {
-    passwordToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      const wrapper = this.closest('.password-wrapper');
-      const input = wrapper.querySelector('.form-input');
-      const icon = this.querySelector('i');
-      
-      if (input.type === 'password') {
-        // Mostrar password
-        input.type = 'text';
-        icon.classList.remove('bi-eye-slash');
-        icon.classList.add('bi-eye');
-        this.setAttribute('aria-label', 'Esconder password');
-      } else {
-        // Esconder password
-        input.type = 'password';
-        icon.classList.remove('bi-eye');
-        icon.classList.add('bi-eye-slash');
-        this.setAttribute('aria-label', 'Mostrar password');
-      }
-      
-      // Feedback visual
-      this.style.transform = 'translateY(-50%) scale(0.9)';
-      setTimeout(() => {
-        this.style.transform = 'translateY(-50%) scale(1)';
-      }, 100);
-    });
-  }
-
-  // ====================================
-  // FORM VALIDATION FEEDBACK
-  // ====================================
-  const form = document.querySelector('.auth-form');
-  
-  if (form) {
-    const passwordInput = form.querySelector('input[type="password"]');
-    
-    // Remove classe de erro ao começar a escrever
-    if (passwordInput) {
-      passwordInput.addEventListener('input', () => {
-        if (passwordInput.classList.contains('is-invalid')) {
-          passwordInput.classList.remove('is-invalid');
-          
-          const errorMsg = passwordInput.parentElement.querySelector('.form-error');
-          if (errorMsg) {
-            errorMsg.style.opacity = '0';
-            setTimeout(() => errorMsg.remove(), 300);
-          }
-        }
-      });
-    }
-    
-    // Prevenir submit múltiplo
-    form.addEventListener('submit', (e) => {
-      const submitBtn = form.querySelector('.btn-submit');
-      
-      if (submitBtn.disabled) {
-        e.preventDefault();
-        return;
-      }
-      
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.7';
-      submitBtn.innerHTML = '<span>A confirmar...</span><i class="bi bi-hourglass-split"></i>';
-      
-      // Re-ativar após 3 segundos (caso haja erro)
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.innerHTML = '<span>Confirmar</span><i class="bi bi-check-circle"></i>';
-      }, 3000);
-    });
-  }
-
-  // ====================================
-  // FORM ANIMATION ON LOAD
-  // ====================================
-  const authCard = document.querySelector('.auth-card');
-  
-  if (authCard) {
-    authCard.style.opacity = '0';
-    authCard.style.transform = 'translateY(20px)';
-    
-    setTimeout(() => {
-      authCard.style.transition = 'all 0.6s ease';
-      authCard.style.opacity = '1';
-      authCard.style.transform = 'translateY(0)';
-    }, 100);
-  }
-
-  // ====================================
-  // FOCUS NO INPUT
-  // ====================================
-  const passwordInput = form?.querySelector('input[type="password"]');
-  if (passwordInput) {
-    setTimeout(() => passwordInput.focus(), 300);
-  }
-
+document.addEventListener("DOMContentLoaded", () => {
+  initPasswordToggle();
+  initConfirmPasswordValidation();
+  initAuthEntryAnimation();
 });
+
+function initPasswordToggle() {
+  const toggle = document.querySelector(".password-toggle");
+
+  if (!toggle) {
+    return;
+  }
+
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const wrapper = toggle.closest(".password-wrapper");
+    const input = wrapper?.querySelector(".form-input");
+    const icon = toggle.querySelector("i");
+
+    if (!input || !icon) {
+      return;
+    }
+
+    const isHidden = input.type === "password";
+
+    input.type = isHidden ? "text" : "password";
+
+    icon.classList.toggle("bi-eye", isHidden);
+    icon.classList.toggle("bi-eye-slash", !isHidden);
+
+    toggle.setAttribute(
+      "aria-label",
+      isHidden ? "Esconder palavra-passe" : "Mostrar palavra-passe"
+    );
+
+    toggle.classList.add("is-pressed");
+
+    window.setTimeout(() => {
+      toggle.classList.remove("is-pressed");
+    }, 120);
+
+    input.focus();
+  });
+}
+
+function initConfirmPasswordValidation() {
+  const form = document.querySelector(".auth-form");
+
+  if (!form) {
+    return;
+  }
+
+  const passwordInput = form.querySelector('input[name="password"]');
+  const submitBtn = form.querySelector(".btn-submit");
+
+  if (!passwordInput) {
+    return;
+  }
+
+  passwordInput.addEventListener("input", () => {
+    if (passwordInput.classList.contains("is-invalid")) {
+      passwordInput.classList.remove("is-invalid");
+      hideError(passwordInput);
+    }
+  });
+
+  passwordInput.addEventListener("blur", () => {
+    validatePassword(passwordInput);
+  });
+
+  form.addEventListener("submit", (event) => {
+    const isValid = validatePassword(passwordInput);
+
+    if (!isValid) {
+      event.preventDefault();
+      passwordInput.focus();
+      return;
+    }
+
+    if (submitBtn?.disabled) {
+      event.preventDefault();
+      return;
+    }
+
+    setSubmitLoading(submitBtn);
+  });
+}
+
+function validatePassword(input) {
+  const value = input.value || "";
+
+  if (!value.trim()) {
+    input.classList.add("is-invalid");
+    showError(input, "Este campo é obrigatório.");
+    return false;
+  }
+
+  input.classList.remove("is-invalid");
+  hideError(input);
+
+  return true;
+}
+
+function showError(input, message) {
+  const parent = input.closest(".form-group") || input.parentElement;
+
+  if (!parent) {
+    return;
+  }
+
+  let errorEl = parent.querySelector(".form-error");
+
+  if (!errorEl) {
+    errorEl = document.createElement("span");
+    errorEl.className = "form-error";
+    parent.appendChild(errorEl);
+  }
+
+  errorEl.innerHTML = `
+    <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+    <span>${escapeHTML(message)}</span>
+  `;
+
+  errorEl.style.opacity = "1";
+}
+
+function hideError(input) {
+  const parent = input.closest(".form-group") || input.parentElement;
+  const errorEl = parent?.querySelector(".form-error");
+
+  if (!errorEl) {
+    return;
+  }
+
+  errorEl.style.opacity = "0";
+
+  window.setTimeout(() => {
+    errorEl.remove();
+  }, 180);
+}
+
+function setSubmitLoading(submitBtn) {
+  if (!submitBtn) {
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.classList.add("is-loading");
+
+  submitBtn.innerHTML = `
+    <span>A confirmar...</span>
+    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+  `;
+}
+
+function initAuthEntryAnimation() {
+  const authCard = document.querySelector(".auth-card");
+
+  authCard?.classList.add("is-entering");
+
+  window.setTimeout(() => {
+    authCard?.classList.add("is-visible");
+  }, 80);
+}
+
+function escapeHTML(value) {
+  const div = document.createElement("div");
+  div.textContent = String(value ?? "");
+
+  return div.innerHTML;
+}
