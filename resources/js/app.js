@@ -1,7 +1,17 @@
 // resources/js/app.js
 
-// Necessário para Echo + Reverb realtime
-import "./bootstrap";
+/*
+|--------------------------------------------------------------------------
+| Bootstrap (Echo + Reverb) — isolado
+|--------------------------------------------------------------------------
+| Importado de forma dinâmica e protegida: se o Echo/Reverb falhar (ex:
+| variáveis de ambiente em falta, servidor Reverb fora do ar), o resto
+| do app.js continua a correr na mesma — incluindo o tema.
+*/
+
+import("./bootstrap").catch((error) => {
+  console.error("Falha ao carregar bootstrap/echo:", error);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
         resetPageAnimationsAfterThemeChange();
       }
     });
+  } else {
+    console.warn("Theme toggle: botão #themeToggle não encontrado no DOM.");
   }
 
   /*
